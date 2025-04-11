@@ -7,12 +7,21 @@ public class EnvironmentForest : Environment
     public override EnvironmentType Type => EnvironmentType.Forest;
     public override Player ApplyEffect(Player player)
     {
-        // Implement the effect of the desert environment on the player
+        player.WeaponStrength -= player.WeaponStrength * 0.18f;
+        player.Resistance.SetResistance(ResistanceType.Fire, 0f);
         return player;
     }
 
     public override List<Damage> ApplyEffect(Damage damage)
     {
-        throw new System.NotImplementedException();
+        return new List<Damage>
+        {
+            damage
+        };
+    }
+
+    public override float ApplyEffect(float damage)
+    {
+        return damage;
     }
 }

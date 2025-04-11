@@ -5,10 +5,11 @@ using UnityEngine;
 public class EnvironmentDesert : Environment
 {
     private float fireDamageConvertionRate = 0.15f;
+    private float flatDamage = 20f;
     public override EnvironmentType Type => EnvironmentType.Desert;
     public override Player ApplyEffect(Player player)
     {
-        // Implement the effect of the desert environment on the player
+        player.Resistance.DebuffResistanceByValue(ResistanceType.Physical, 12f);
         return player;
     }
 
@@ -23,6 +24,13 @@ public class EnvironmentDesert : Environment
         {
             fireDamage,damage
         };
+    }
+
+    public override float ApplyEffect(float damage)
+    {
+        //Add flat damage
+        damage += flatDamage;
+        return damage;
     }
 }
 

@@ -7,12 +7,24 @@ public class EnvironmentHills : Environment
     public override EnvironmentType Type => EnvironmentType.Hills;
     public override Player ApplyEffect(Player player)
     {
-        // Implement the effect of the desert environment on the player
+        player.ActiveDebuffs.Clear();
+        foreach (var buff in player.ActiveBuffs)
+        {
+            buff.ModifyMultiplierByRatio(1f);
+        }
         return player;
     }
 
     public override List<Damage> ApplyEffect(Damage damage)
     {
-        throw new System.NotImplementedException();
+        return new List<Damage>
+        {
+            damage
+        };
+    }
+
+    public override float ApplyEffect(float damage)
+    {
+        return damage;
     }
 }

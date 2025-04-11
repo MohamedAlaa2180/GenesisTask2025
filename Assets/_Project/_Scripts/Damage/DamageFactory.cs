@@ -4,22 +4,26 @@ using Task_Player;
 using UnityEngine;
 using System.Linq;
 
-public static class DamageFactory
+public class DamageFactory
 {
-    public static Damage Create(DamageType type, float amount)
+    private readonly Dictionary<DamageType, Func<float, Damage>> _registry = new();
+
+    public DamageFactory()
     {
-        switch(type)
+        // Register all weapon types
+        _registry[DamageType.Fire] = amount => new DamageFire(amount);
+        _registry[DamageType.Ice] = amount => new DamageIce(amount);
+        _registry[DamageType.Physical] = amount => new DamagePhysical(amount);
+        _registry[DamageType.Poison] = amount => new DamagePoison(amount);
+    }
+
+    public Damage Create(DamageType type, float amount)
+    {
+        if (_registry.TryGetValue(type, out var constructor))
         {
-            case DamageType.Physical:
-                return new DamagePhysical(amount);
-            case DamageType.Poison:
-                return new DamagePoison(amount);
-            case DamageType.Fire:
-                return new DamageFire(amount);
-            case DamageType.Ice:
-                return new DamageIce(amount);
-            default:
-                throw new ArgumentException($"No Damage registered for {type}");
+            return constructor(amount);
         }
+
+        throw new ArgumentException($"Damage type '{type}' not registered.");
     }
 }

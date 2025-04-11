@@ -8,6 +8,7 @@ public abstract class Environment
     public abstract EnvironmentType Type { get; }
 
     public abstract Player ApplyEffect(Player player);
+    public abstract float ApplyEffect(float damage);
     public abstract List<Damage> ApplyEffect(Damage damage);
 
 }
