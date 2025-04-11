@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Task_Player;
 using UnityEngine;
 
@@ -7,10 +8,11 @@ public class EnvironmentMountains : Environment
     public override EnvironmentType Type => EnvironmentType.Mountains;
     public override Player ApplyEffect(Player player)
     {
-        player.Resistance.BuffResistanceByValue(ResistanceType.Physical, 50f);
-        player.Resistance.BuffResistanceByValue(ResistanceType.Fire, 50f);
-        player.Resistance.BuffResistanceByValue(ResistanceType.Ice, 50f);
-        player.Resistance.BuffResistanceByValue(ResistanceType.Poison, 50f);
+        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Physical)?.IncreaseByValue(50f);
+        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Fire)?.IncreaseByValue(50f);
+        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Ice)?.IncreaseByValue(50f);
+        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Poison)?.IncreaseByValue(50f);
+
         return player;
     }
 

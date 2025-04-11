@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Task_Player;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class EnvironmentDesert : Environment
     public override EnvironmentType Type => EnvironmentType.Desert;
     public override Player ApplyEffect(Player player)
     {
-        player.Resistance.DebuffResistanceByValue(ResistanceType.Physical, 12f);
+        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Physical)?.DecreaseByValue(12f);
         return player;
     }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Task_Player;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class EnvironmentForest : Environment
     public override Player ApplyEffect(Player player)
     {
         player.WeaponStrength -= player.WeaponStrength * 0.18f;
-        player.Resistance.SetResistance(ResistanceType.Fire, 0f);
+        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Fire)?.SetResistance(0f);
         return player;
     }
 
