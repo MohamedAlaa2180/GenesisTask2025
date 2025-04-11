@@ -1,28 +1,19 @@
-using System.Collections.Generic;
 using System;
-using Task_Player;
-using UnityEngine;
+using System.Collections.Generic;
 
-public class EnvironmentFactory
+namespace Task_Environment
 {
-    private readonly Dictionary<EnvironmentType, Func<Environment>> _registry = new();
+    public enum EnvironmentType
+    { Desert, Mountains, Forest, Hills }
 
-    public EnvironmentFactory()
+    public class EnvironmentFactory : FactoryBase<EnvironmentType, Environment>
     {
-        // Register all weapon types
-        _registry[EnvironmentType.Desert] = () => new EnvironmentDesert();
-        _registry[EnvironmentType.Forest] = () => new EnvironmentForest();
-        _registry[EnvironmentType.Mountains] = () => new EnvironmentMountains();
-        _registry[EnvironmentType.Hills] = () => new EnvironmentHills();
-    }
-
-    public Environment Create(EnvironmentType type)
-    {
-        if (_registry.TryGetValue(type, out var constructor))
+        public EnvironmentFactory()
         {
-            return constructor();
+            Register(EnvironmentType.Desert, _ => new EnvironmentDesert());
+            Register(EnvironmentType.Forest, _ => new EnvironmentForest());
+            Register(EnvironmentType.Mountains, _ => new EnvironmentMountains());
+            Register(EnvironmentType.Hills, _ => new EnvironmentHills());
         }
-
-        throw new ArgumentException($"Environment type '{type}' not registered.");
     }
 }

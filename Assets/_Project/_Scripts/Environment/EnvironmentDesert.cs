@@ -1,37 +1,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using Task_Player;
-using UnityEngine;
 
-public class EnvironmentDesert : Environment
+namespace Task_Environment
 {
-    private float fireDamageConvertionRate = 0.15f;
-    private float flatDamage = 20f;
-    public override EnvironmentType Type => EnvironmentType.Desert;
-    public override Player ApplyEffect(Player player)
+    public class EnvironmentDesert : Environment
     {
-        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Physical)?.DecreaseByValue(12f);
-        return player;
-    }
+        private float fireDamageConvertionRate = 0.15f;
+        private float flatDamage = 20f;
+        public override EnvironmentType Type => EnvironmentType.Desert;
 
-    public override List<Damage> ApplyEffect(Damage damage)
-    {
-        float totalAttackValue = damage.DamageAmount;
+        public override Player ApplyEffectOnPlayer(Player player)
+        {
+            player.Resistances.FirstOrDefault(r => r.Type == DamageType.Physical)?.DecreaseByValue(12f);
+            return player;
+        }
 
-        DamageFire fireDamage = new DamageFire(totalAttackValue * fireDamageConvertionRate);
-        damage.DamageAmount -= fireDamage.DamageAmount;
+        public override List<Damage> ApplyEffectOnDamageType(Damage damage)
+        {
+            float totalAttackValue = damage.DamageAmount;
 
-        return new List<Damage>
+            DamageFire fireDamage = new DamageFire(totalAttackValue * fireDamageConvertionRate);
+            damage.DamageAmount -= fireDamage.DamageAmount;
+
+            return new List<Damage>
         {
             fireDamage,damage
         };
-    }
+        }
 
-    public override float ApplyEffect(float damage)
-    {
-        //Add flat damage
-        damage += flatDamage;
-        return damage;
+        public override float ApplyEffectOnDamageValue(float damage)
+        {
+            //Add flat damage
+            damage += flatDamage;
+            return damage;
+        }
     }
 }
-

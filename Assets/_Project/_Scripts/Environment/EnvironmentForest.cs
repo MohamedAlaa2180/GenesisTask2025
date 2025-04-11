@@ -1,28 +1,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using Task_Player;
-using UnityEngine;
 
-public class EnvironmentForest : Environment
+namespace Task_Environment
 {
-    public override EnvironmentType Type => EnvironmentType.Forest;
-    public override Player ApplyEffect(Player player)
+    public class EnvironmentForest : Environment
     {
-        player.WeaponStrength -= player.WeaponStrength * 0.18f;
-        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Fire)?.SetResistance(0f);
-        return player;
-    }
+        public override EnvironmentType Type => EnvironmentType.Forest;
 
-    public override List<Damage> ApplyEffect(Damage damage)
-    {
-        return new List<Damage>
+        public override Player ApplyEffectOnPlayer(Player player)
+        {
+            player.WeaponStrength -= player.WeaponStrength * 0.18f;
+            player.Resistances.FirstOrDefault(r => r.Type == DamageType.Fire)?.SetResistance(0f);
+            return player;
+        }
+
+        public override List<Damage> ApplyEffectOnDamageType(Damage damage)
+        {
+            return new List<Damage>
         {
             damage
         };
-    }
+        }
 
-    public override float ApplyEffect(float damage)
-    {
-        return damage;
+        public override float ApplyEffectOnDamageValue(float damage)
+        {
+            return damage;
+        }
     }
 }

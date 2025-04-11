@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using Task_Player;
-using UnityEngine;
 
-
-public abstract class Environment
+namespace Task_Environment
 {
-    public abstract EnvironmentType Type { get; }
+    public abstract class Environment
+    {
+        public abstract EnvironmentType Type { get; }
 
-    public abstract Player ApplyEffect(Player player);
-    public abstract float ApplyEffect(float damage);
-    public abstract List<Damage> ApplyEffect(Damage damage);
+        public abstract Player ApplyEffectOnPlayer(Player player);
 
+        public abstract float ApplyEffectOnDamageValue(float damage);
+
+        public abstract List<Damage> ApplyEffectOnDamageType(Damage damage);
+    }
 }

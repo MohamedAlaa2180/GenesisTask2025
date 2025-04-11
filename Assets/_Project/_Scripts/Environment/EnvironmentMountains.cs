@@ -1,32 +1,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using Task_Player;
-using UnityEngine;
 
-public class EnvironmentMountains : Environment
+namespace Task_Environment
 {
-    public override EnvironmentType Type => EnvironmentType.Mountains;
-    public override Player ApplyEffect(Player player)
+    public class EnvironmentMountains : Environment
     {
-        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Physical)?.IncreaseByValue(50f);
-        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Fire)?.IncreaseByValue(50f);
-        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Ice)?.IncreaseByValue(50f);
-        player.Resistances.FirstOrDefault(r => r.Type == DamageType.Poison)?.IncreaseByValue(50f);
+        public override EnvironmentType Type => EnvironmentType.Mountains;
 
-        return player;
-    }
+        public override Player ApplyEffectOnPlayer(Player player)
+        {
+            player.Resistances.FirstOrDefault(r => r.Type == DamageType.Physical)?.IncreaseByValue(50f);
+            player.Resistances.FirstOrDefault(r => r.Type == DamageType.Fire)?.IncreaseByValue(50f);
+            player.Resistances.FirstOrDefault(r => r.Type == DamageType.Ice)?.IncreaseByValue(50f);
+            player.Resistances.FirstOrDefault(r => r.Type == DamageType.Poison)?.IncreaseByValue(50f);
 
-    public override List<Damage> ApplyEffect(Damage damage)
-    {
-        damage.DamageAmount = damage.Type == DamageType.Ice ? 0 : damage.DamageAmount;
+            return player;
+        }
 
-        return new List<Damage>
+        public override List<Damage> ApplyEffectOnDamageType(Damage damage)
+        {
+            damage.DamageAmount = damage.Type == DamageType.Ice ? 0 : damage.DamageAmount;
+
+            return new List<Damage>
         {
             damage
         };
-    }
-    public override float ApplyEffect(float damage)
-    {
-        return damage;
+        }
+
+        public override float ApplyEffectOnDamageValue(float damage)
+        {
+            return damage;
+        }
     }
 }
