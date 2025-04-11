@@ -9,7 +9,12 @@ namespace Task_Environment
 
         public override Player ApplyEffectOnPlayer(Player player)
         {
-            player.ActiveDebuffs.Clear();
+            // Disable Debuffs
+            foreach (var deBuff in player.ActiveDebuffs)
+            {
+                deBuff.DisableEffect();
+            }
+            // +100% Buffs Power
             foreach (var buff in player.ActiveBuffs)
             {
                 buff.ModifyMultiplierByRatio(1f);
@@ -20,9 +25,9 @@ namespace Task_Environment
         public override List<Damage> ApplyEffectOnDamageType(Damage damage)
         {
             return new List<Damage>
-        {
-            damage
-        };
+            {
+                damage
+            };
         }
 
         public override float ApplyEffectOnDamageValue(float damage)
