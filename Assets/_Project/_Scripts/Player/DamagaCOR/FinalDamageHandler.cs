@@ -15,25 +15,24 @@ namespace Task_DamageCORPattern
             _environmentFactory = new EnvironmentFactory();
         }
 
-        public override float Handle(Player attacker, Player defender, float inputDamage, EnvironmentType environmentType, DamageType damageType)
+        public override DamageResult Handle(Player attacker, Player defender, DamageResult inputDamage, EnvironmentType environmentType, DamageType damageType)
         {
-            Damage baseDamageType = _damageFactory.Create(damageType, inputDamage - attacker.FlatDamage);
+            Damage baseDamageType = _damageFactory.Create(damageType, inputDamage.ElementalDamage);
             var environment = _environmentFactory.Create(environmentType);
 
             // Apply the environment effect to the damage
             var damageList = environment.ApplyEffectOnDamageType(baseDamageType);
-            float totalDamageRecieved = 0f;
+
+            inputDamage.ElementalDamage = 0;
             for (int i = 0; i < damageList.Count; i++)
             {
                 var damage = damageList[i];
                 damage = ApplyResistance(defender, damage);
                 damage.ApplyEffect(defender);
-                totalDamageRecieved += damage.DamageAmount;
+                inputDamage.ElementalDamage += damage.DamageAmount;
             }
 
-            totalDamageRecieved += attacker.FlatDamage;
-
-            return _next?.Handle(attacker, defender, totalDamageRecieved, environmentType, damageType) ?? totalDamageRecieved;
+            return _next?.Handle(attacker, defender, inputDamage, environmentType, damageType) ?? inputDamage;
         }
 
         private Damage ApplyResistance(Player defender, Damage damage)

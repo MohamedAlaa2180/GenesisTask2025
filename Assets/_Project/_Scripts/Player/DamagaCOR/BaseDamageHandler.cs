@@ -6,11 +6,11 @@ namespace Task_DamageCORPattern
 {
     public class BaseDamageHandler : DamageHandler
     {
-        public override float Handle(Player attacker, Player defender, float inputDamage, EnvironmentType envType, DamageType dmgType)
+        public override DamageResult Handle(Player attacker, Player defender, DamageResult inputDamage, EnvironmentType envType, DamageType dmgType)
         {
             float effectMultiplier = attacker.ActiveBuffs.Sum(b => b.GetEffectValue) - attacker.ActiveDebuffs.Sum(d => d.GetEffectValue);
-            float baseDamage = inputDamage + (attacker.PureDamage * effectMultiplier);
-            return _next?.Handle(attacker, defender, baseDamage, envType, dmgType) ?? baseDamage;
+            inputDamage.AddElementalDamage(attacker.PureDamage * effectMultiplier);
+            return _next?.Handle(attacker, defender, inputDamage, envType, dmgType) ?? inputDamage;
         }
     }
 }

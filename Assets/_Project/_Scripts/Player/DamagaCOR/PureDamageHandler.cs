@@ -5,10 +5,10 @@ namespace Task_DamageCORPattern
 {
     public class PureDamageHandler : DamageHandler
     {
-        public override float Handle(Player attacker, Player defender, float inputDamage, EnvironmentType envType, DamageType dmgType)
+        public override DamageResult Handle(Player attacker, Player defender, DamageResult inputDamage, EnvironmentType envType, DamageType dmgType)
         {
-            float pureDamage = attacker.PureDamage + inputDamage;
-            return _next?.Handle(attacker, defender, pureDamage, envType, dmgType) ?? pureDamage;
+            inputDamage.AddElementalDamage(attacker.PureDamage);
+            return _next?.Handle(attacker, defender, inputDamage, envType, dmgType) ?? inputDamage;
         }
     }
 }

@@ -12,16 +12,16 @@ namespace Task_DamageCORPattern
             _environmentFactory = new EnvironmentFactory();
         }
 
-        public override float Handle(Player attacker, Player defender, float inputDamage, EnvironmentType environmentType, DamageType dmgType)
+        public override DamageResult Handle(Player attacker, Player defender, DamageResult inputDamage, EnvironmentType environmentType, DamageType dmgType)
         {
             var environment = _environmentFactory.Create(environmentType);
 
             attacker = environment.ApplyEffectOnPlayer(attacker);
             defender = environment.ApplyEffectOnPlayer(defender);
 
-            var environmentalDamage = inputDamage + attacker.FlatDamage;
+            inputDamage.AddFlatDamage(attacker.FlatDamage);
 
-            return _next?.Handle(attacker, defender, environmentalDamage, environmentType, dmgType) ?? environmentalDamage;
+            return _next?.Handle(attacker, defender, inputDamage, environmentType, dmgType) ?? inputDamage;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Task_DamageStrategyPattern
 
         public override float CalculateDamage(Player attacker, Player defender, EnvironmentType environmentType = EnvironmentType.Desert, DamageType damageType = DamageType.Fire)
         {
-            return _chainHead.Handle(attacker, defender, 0f, environmentType, damageType);
+            return _chainHead.Handle(attacker, defender, new DamageResult(0, 0), environmentType, damageType).TotalDamage;
         }
     }
 }
