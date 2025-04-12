@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Task_Player
 {
     public enum DamageType
@@ -15,6 +12,5 @@ namespace Task_Player
             Register(DamageType.Physical, args => new DamagePhysical((float)args[0]));
             Register(DamageType.Poison, args => new DamagePoison((float)args[0]));
         }
-      
     }
 }

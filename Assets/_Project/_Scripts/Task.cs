@@ -21,8 +21,8 @@ public static class Task
         defender.Resistances.FirstOrDefault(r => r.Type == DamageType.Fire)?.SetResistance(56f);
         defender.Resistances.FirstOrDefault(r => r.Type == DamageType.Ice)?.SetResistance(78f);
 
-        Debug.Log($"Final Damage: {CalculateFinalDamage(attacker, defender, EnvironmentType.Desert, DamageType.Ice)}");
-        Debug.Log($"Environmental Damage: {CalculateEnvironmentalDamage(attacker, defender, EnvironmentType.Forest)}");
+        Debug.Log($"Final Damage: {CalculateFinalDamage(attacker, defender, EnvironmentType.Hills, DamageType.Ice)}");
+        Debug.Log($"Environmental Damage: {CalculateEnvironmentalDamage(attacker, defender, EnvironmentType.Hills)}");
         Debug.Log($"Base Damage: {CalculateBaseDamage(attacker, defender)}");
         Debug.Log($"Pure Damage: {CalculatePureDamage(attacker, defender)}");
     }

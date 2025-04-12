@@ -1,11 +1,14 @@
 using Task_Environment;
 using Task_Player;
 
-public class PureDamageHandler : DamageHandler
+namespace Task_DamageCORPattern
 {
-    public override float Handle(Player attacker, Player defender, float inputDamage, EnvironmentType envType, DamageType dmgType)
+    public class PureDamageHandler : DamageHandler
     {
-        float pureDamage = attacker.PureDamage + inputDamage;
-        return _next?.Handle(attacker, defender, pureDamage, envType, dmgType) ?? pureDamage;
+        public override float Handle(Player attacker, Player defender, float inputDamage, EnvironmentType envType, DamageType dmgType)
+        {
+            float pureDamage = attacker.PureDamage + inputDamage;
+            return _next?.Handle(attacker, defender, pureDamage, envType, dmgType) ?? pureDamage;
+        }
     }
 }

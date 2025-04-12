@@ -1,23 +1,27 @@
 using Task_Environment;
 using Task_Player;
-using UnityEngine;
 
-public class EnvironmentalDamageHandler : DamageHandler
+namespace Task_DamageCORPattern
 {
-    private readonly FactoryBase<EnvironmentType, Environment> _environmentFactory;
-    public EnvironmentalDamageHandler()
+    public class EnvironmentalDamageHandler : DamageHandler
     {
-        _environmentFactory = new EnvironmentFactory();
-    }
-    public override float Handle(Player attacker, Player defender, float inputDamage, EnvironmentType environmentType, DamageType dmgType)
-    {
-        var environment = _environmentFactory.Create(environmentType);
+        private readonly FactoryBase<EnvironmentType, Environment> _environmentFactory;
 
-        attacker = environment.ApplyEffectOnPlayer(attacker);
-        defender = environment.ApplyEffectOnPlayer(defender);
+        public EnvironmentalDamageHandler()
+        {
+            _environmentFactory = new EnvironmentFactory();
+        }
 
-        var environmentalDamage = inputDamage + attacker.FlatDamage;
+        public override float Handle(Player attacker, Player defender, float inputDamage, EnvironmentType environmentType, DamageType dmgType)
+        {
+            var environment = _environmentFactory.Create(environmentType);
 
-        return _next?.Handle(attacker, defender, environmentalDamage, environmentType, dmgType) ?? environmentalDamage;
+            attacker = environment.ApplyEffectOnPlayer(attacker);
+            defender = environment.ApplyEffectOnPlayer(defender);
+
+            var environmentalDamage = inputDamage + attacker.FlatDamage;
+
+            return _next?.Handle(attacker, defender, environmentalDamage, environmentType, dmgType) ?? environmentalDamage;
+        }
     }
 }

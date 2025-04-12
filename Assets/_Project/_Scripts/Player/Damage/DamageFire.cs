@@ -1,18 +1,20 @@
 using System;
-using Task_Player;
 using UnityEngine;
 
-[Serializable]
-public class DamageFire : Damage
+namespace Task_Player
 {
-    public override DamageType Type => DamageType.Fire;
-
-    public DamageFire(float amount) : base(amount)
+    [Serializable]
+    public class DamageFire : Damage
     {
-    }
+        public override DamageType Type => DamageType.Fire;
 
-    public override void ApplyEffect(Player target)
-    {
-        Debug.Log($"Player {target} recieved damage of type {Type.ToString()} with amount {DamageAmount}");
+        public DamageFire(float amount) : base(amount)
+        {
+        }
+
+        public override void ApplyEffect(Player target)
+        {
+            Debug.Log($"Player {target} recieved damage of type {Type.ToString()} with amount {DamageAmount}");
+        }
     }
 }

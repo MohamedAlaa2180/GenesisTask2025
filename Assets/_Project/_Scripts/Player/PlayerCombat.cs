@@ -1,3 +1,4 @@
+using Task_DamageStrategyPattern;
 using Task_Environment;
 
 namespace Task_Player
@@ -11,10 +12,12 @@ namespace Task_Player
     {
         // Cloned attacker and defender instances used for damage computations
         private readonly Player _attacker;
+
         private readonly Player _defender;
 
         // Strategy instances for each damage calculation phase
         private readonly IDamageCalculationStrategy _pureDamageStrategy;
+
         private readonly IDamageCalculationStrategy _baseDamageStrategy;
         private readonly IDamageCalculationStrategy _environmentalDamageStrategy;
         private readonly IDamageCalculationStrategy _finalDamageStrategy;
