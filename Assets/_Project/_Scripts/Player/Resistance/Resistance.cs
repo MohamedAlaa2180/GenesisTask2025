@@ -10,6 +10,8 @@ public abstract class Resistance
         ResistanceAmount = amount;
     }
 
+    public abstract Resistance Clone();
+
     public void IncreaseByValue(float value) => ResistanceAmount += value;
 
     public void IncreaseByRatio(float value) => ResistanceAmount += ResistanceAmount * value;

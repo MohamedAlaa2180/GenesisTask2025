@@ -14,13 +14,13 @@ namespace Task_Player
 
         public PlayerCombat(Player attacker, Player defender)
         {
-            this.attacker = attacker;
-            this.defender = defender;
+            this.attacker = attacker.Clone();
+            this.defender = defender.Clone();
 
             _pureDamageStrategy = new PureDamageStrategy();
             _baseDamageStrategy = new BaseDamageStrategy();
-            _environmentalDamageStrategy = new EnvironmentalDamageStrategy(_baseDamageStrategy as BaseDamageStrategy);
-            _finalDamageStrategy = new FinalDamageStrategy(_environmentalDamageStrategy as EnvironmentalDamageStrategy);
+            _environmentalDamageStrategy = new EnvironmentalDamageStrategy();
+            _finalDamageStrategy = new FinalDamageStrategy();
         }
 
         public float CalculatePureDamage()

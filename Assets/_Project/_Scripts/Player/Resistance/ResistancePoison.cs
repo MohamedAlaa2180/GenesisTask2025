@@ -7,4 +7,9 @@ public class ResistancePoison : Resistance
     public ResistancePoison(float amount) : base(amount)
     {
     }
+
+    public override Resistance Clone()
+    {
+        return new ResistancePoison(this.ResistanceAmount);
+    }
 }

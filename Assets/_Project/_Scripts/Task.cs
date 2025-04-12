@@ -1,3 +1,4 @@
+using System.Linq;
 using Task_Environment;
 using Task_Player;
 using UnityEngine;
@@ -10,19 +11,18 @@ public static class Task
     public static void Test()
     {
         var attacker = new Player();
-        attacker.AttackPower = 121;
-        attacker.WeaponStrength = 54;
-        attacker.ActiveBuffs.Add(new StatusEffect("Determined", 1.5f));
-        attacker.ActiveBuffs.Add(new StatusEffect("Determined", 0.7f));
-        attacker.ActiveDebuffs.Add(new StatusEffect("Exhausted", 1.2f));
+        attacker.AttackPower = 0;
+        attacker.WeaponStrength = 100;
+        attacker.ActiveBuffs.Add(new StatusEffect("Determined", 1.2f));
+        attacker.ActiveBuffs.Add(new StatusEffect("Determined", 1.1f));
         attacker.ActiveDebuffs.Add(new StatusEffect("Dizzy", 0.8f));
 
         var defender = new Player();
-        defender.Resistances.Add(new ResistanceFire(56f));
-        defender.Resistances.Add(new ResistanceIce(78f));
+        defender.Resistances.FirstOrDefault(r => r.Type == DamageType.Fire)?.SetResistance(56f);
+        defender.Resistances.FirstOrDefault(r => r.Type == DamageType.Ice)?.SetResistance(78f);
 
         Debug.Log($"Final Damage: {CalculateFinalDamage(attacker, defender, EnvironmentType.Desert, DamageType.Ice)}");
-        Debug.Log($"Environmental Damage: {CalculateEnvironmentalDamage(attacker, defender, EnvironmentType.Desert)}");
+        Debug.Log($"Environmental Damage: {CalculateEnvironmentalDamage(attacker, defender, EnvironmentType.Forest)}");
         Debug.Log($"Base Damage: {CalculateBaseDamage(attacker, defender)}");
         Debug.Log($"Pure Damage: {CalculatePureDamage(attacker, defender)}");
     }

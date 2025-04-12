@@ -13,6 +13,7 @@ namespace Task_Environment
         public override Player ApplyEffectOnPlayer(Player player)
         {
             player.Resistances.FirstOrDefault(r => r.Type == DamageType.Physical)?.DecreaseByValue(12f);
+            player.AddFlatDamage(flatDamage);
             return player;
         }
 
@@ -27,13 +28,6 @@ namespace Task_Environment
         {
             fireDamage,damage
         };
-        }
-
-        public override float ApplyEffectOnDamageValue(float damage)
-        {
-            //Add flat damage
-            damage += flatDamage;
-            return damage;
         }
     }
 }

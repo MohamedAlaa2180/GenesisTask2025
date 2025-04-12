@@ -9,8 +9,6 @@ namespace Task_Environment
 
         public abstract Player ApplyEffectOnPlayer(Player player);
 
-        public abstract float ApplyEffectOnDamageValue(float damage);
-
         public abstract List<Damage> ApplyEffectOnDamageType(Damage damage);
     }
 }

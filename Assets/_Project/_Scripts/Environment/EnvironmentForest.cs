@@ -22,10 +22,5 @@ namespace Task_Environment
             damage
         };
         }
-
-        public override float ApplyEffectOnDamageValue(float damage)
-        {
-            return damage;
-        }
     }
 }

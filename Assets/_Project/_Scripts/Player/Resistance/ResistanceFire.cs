@@ -7,4 +7,9 @@ public class ResistanceFire : Resistance
     public ResistanceFire(float amount) : base(amount)
     {
     }
+
+    public override Resistance Clone()
+    {
+        return new ResistanceFire(this.ResistanceAmount);
+    }
 }

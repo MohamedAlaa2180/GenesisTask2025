@@ -13,6 +13,10 @@ namespace Task_Player
             DamageMultiplier = damageMultiplier;
             _originalDamageMultiplier = damageMultiplier;
         }
+        public StatusEffect Clone()
+        {
+            return new StatusEffect(this.Name, this.DamageMultiplier);
+        }
 
         public void ModifyMultiplierByRatio(float value) => DamageMultiplier += DamageMultiplier * value;
         public void DisableEffect() => DamageMultiplier = 1f;

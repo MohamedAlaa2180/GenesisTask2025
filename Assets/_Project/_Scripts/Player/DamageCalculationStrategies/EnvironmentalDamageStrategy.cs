@@ -1,26 +1,23 @@
 ﻿using Task_Environment;
 using Task_Player;
 
-public class EnvironmentalDamageStrategy : IDamageCalculationStrategy
+public class EnvironmentalDamageStrategy : ChainedDamageCalculationStrategy
 {
-    private readonly BaseDamageStrategy _baseStrategy;
-    private readonly FactoryBase<EnvironmentType, Environment> _environmentFactory;
-    public EnvironmentalDamageStrategy(BaseDamageStrategy baseStrategy)
+    public EnvironmentalDamageStrategy()
     {
-        _baseStrategy = baseStrategy;
-        _environmentFactory = new EnvironmentFactory();
+        var environmentalDamageHandler = new EnvironmentalDamageHandler();
+        var pureDamageHandler = new PureDamageHandler();
+        var baseDamageHander = new BaseDamageHandler();
+
+
+        environmentalDamageHandler.SetNext(pureDamageHandler);
+        pureDamageHandler.SetNext(baseDamageHander);
+
+        _chainHead = environmentalDamageHandler;
     }
 
-    public float CalculateDamage(Player attacker, Player defender, EnvironmentType environmentType = EnvironmentType.Desert, DamageType damageType = DamageType.Fire)
+    public override float CalculateDamage(Player attacker, Player defender, EnvironmentType environmentType = EnvironmentType.Desert, DamageType damageType = DamageType.Fire)
     {
-        var environment = _environmentFactory.Create(environmentType);
-
-        attacker = environment.ApplyEffectOnPlayer(attacker);
-
-        float baseDamage = _baseStrategy.CalculateDamage(attacker, defender);
-
-        float environmentalDamage = environment.ApplyEffectOnDamageValue(baseDamage);
-
-        return environmentalDamage;
+        return _chainHead.Handle(attacker,defender,0f,environmentType, damageType);
     }
 }

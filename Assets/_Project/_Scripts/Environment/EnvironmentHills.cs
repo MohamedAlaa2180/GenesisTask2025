@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Task_Player;
+using Unity.VisualScripting;
 
 namespace Task_Environment
 {
@@ -28,11 +30,6 @@ namespace Task_Environment
             {
                 damage
             };
-        }
-
-        public override float ApplyEffectOnDamageValue(float damage)
-        {
-            return damage;
         }
     }
 }
