@@ -3,17 +3,20 @@ using Task_Player;
 
 public class EnvironmentalDamageStrategy : ChainedDamageCalculationStrategy
 {
+    private EnvironmentalDamageHandler _environmentalDamageHandler;
+    private PureDamageHandler _pureDamageHandler;
+    private BaseDamageHandler _baseDamageHandler;
     public EnvironmentalDamageStrategy()
     {
-        var environmentalDamageHandler = new EnvironmentalDamageHandler();
-        var pureDamageHandler = new PureDamageHandler();
-        var baseDamageHander = new BaseDamageHandler();
+        _environmentalDamageHandler = new EnvironmentalDamageHandler();
+        _pureDamageHandler = new PureDamageHandler();
+        _baseDamageHandler = new BaseDamageHandler();
 
 
-        environmentalDamageHandler.SetNext(pureDamageHandler);
-        pureDamageHandler.SetNext(baseDamageHander);
+        _environmentalDamageHandler.SetNext(_pureDamageHandler);
+        _pureDamageHandler.SetNext(_baseDamageHandler);
 
-        _chainHead = environmentalDamageHandler;
+        _chainHead = _environmentalDamageHandler;
     }
 
     public override float CalculateDamage(Player attacker, Player defender, EnvironmentType environmentType = EnvironmentType.Desert, DamageType damageType = DamageType.Fire)

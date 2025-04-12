@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PureDamageStrategy : ChainedDamageCalculationStrategy
 {
+    private PureDamageHandler _pureDamageHandler;
     public PureDamageStrategy()
     {
-        var pureDamageHandler = new PureDamageHandler();
+        _pureDamageHandler = new PureDamageHandler();
 
-        _chainHead = pureDamageHandler;
+        _chainHead = _pureDamageHandler;
     }
     public override float CalculateDamage(Player attacker, Player defender, EnvironmentType environmentType = EnvironmentType.Desert, DamageType damageType = DamageType.Fire)
     {

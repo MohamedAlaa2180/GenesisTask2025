@@ -4,8 +4,8 @@ namespace Task_Player
 {
     public class PlayerCombat
     {
-        private Player attacker;
-        private Player defender;
+        private Player _attacker;
+        private Player _defender;
 
         private IDamageCalculationStrategy _pureDamageStrategy;
         private IDamageCalculationStrategy _baseDamageStrategy;
@@ -14,8 +14,8 @@ namespace Task_Player
 
         public PlayerCombat(Player attacker, Player defender)
         {
-            this.attacker = attacker.Clone();
-            this.defender = defender.Clone();
+            _attacker = attacker.Clone();
+            _defender = defender.Clone();
 
             _pureDamageStrategy = new PureDamageStrategy();
             _baseDamageStrategy = new BaseDamageStrategy();
@@ -25,22 +25,22 @@ namespace Task_Player
 
         public float CalculatePureDamage()
         {
-            return _pureDamageStrategy.CalculateDamage(attacker, defender);
+            return _pureDamageStrategy.CalculateDamage(_attacker, _defender);
         }
 
         public float CalculateBaseDamage()
         {
-            return _baseDamageStrategy.CalculateDamage(attacker, defender);
+            return _baseDamageStrategy.CalculateDamage(_attacker, _defender);
         }
 
         public float CalculateEnvironmentalDamage(EnvironmentType environmentType)
         {
-            return _environmentalDamageStrategy.CalculateDamage(attacker, defender, environmentType);
+            return _environmentalDamageStrategy.CalculateDamage(_attacker, _defender, environmentType);
         }
 
         public float CalculateFinalDamage(EnvironmentType environmentType, DamageType damageType)
         {
-            return _finalDamageStrategy.CalculateDamage(attacker, defender, environmentType, damageType);
+            return _finalDamageStrategy.CalculateDamage(_attacker, _defender, environmentType, damageType);
         }
     }
 }
